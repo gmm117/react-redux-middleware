@@ -4,9 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+
+import rootReducers from './modules';
+// import myLogger from './middlewares/myLogger';
+// import myLogger2 from './middlewares/myLogger2';
+import logger from 'redux-logger';
+import ReduxThunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension'
+
+const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
